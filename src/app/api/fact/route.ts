@@ -6,6 +6,7 @@ import OpenAI from "openai";
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const CACHE_WINDOW_MS = 60 * 1000; // 60 seconds
+const LOCK_EXPIRY_MS = 30 * 1000;  // 30 seconds — stale lock protection
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -34,15 +35,22 @@ export async function POST(req: Request) {
     }
   }
 
-  // Step 2: Burst protection — check if generation is already in progress
-  // Uses a DB-level flag so it works across multiple tabs and requests
+  // Step 2: Burst protection — DB-level lock with expiry timestamp
+  // Works across multiple tabs and server instances unlike in-memory locks
+  // If server crashes before finally runs, lock auto-expires after 30s
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user?.favoriteMovie) {
     return NextResponse.json({ error: "No favorite movie set." }, { status: 400 });
   }
 
-  if (user.isGeneratingFact) {
+  const lockAge = user.generatingFactSince
+    ? Date.now() - user.generatingFactSince.getTime()
+    : null;
+
+  const lockIsActive = lockAge !== null && lockAge < LOCK_EXPIRY_MS;
+
+  if (lockIsActive) {
     if (recentFact) {
       return NextResponse.json({
         fact: recentFact.fact,
@@ -57,10 +65,10 @@ export async function POST(req: Request) {
     );
   }
 
-  // Step 3: Acquire lock
+  // Step 3: Acquire lock with timestamp
   await prisma.user.update({
     where: { id: userId },
-    data: { isGeneratingFact: true },
+    data: { generatingFactSince: new Date() },
   });
 
   try {
@@ -118,7 +126,7 @@ export async function POST(req: Request) {
     // Step 7: Always release lock
     await prisma.user.update({
       where: { id: userId },
-      data: { isGeneratingFact: false },
+      data: { generatingFactSince: null },
     });
   }
 }

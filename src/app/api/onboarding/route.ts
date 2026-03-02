@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   }
 
   const body = await req.json();
-  const movie = body.movie?.trim();
+  const movie = body.movie?.trim().replace(/"/g, "'");
 
   if (!movie || movie.length < 1) {
     return NextResponse.json({ error: "Movie name is required." }, { status: 400 });

@@ -15,10 +15,10 @@ model User {
   emailVerified         DateTime?
   favoriteMovie         String?
   createdAt             DateTime    @default(now())
-  isGeneratingFact      Boolean     @default(false)
   movieFacts            MovieFact[]
   accounts              Account[]
   sessions              Session[]
+  generatingFactSince   DateTime?
 }
 
 model MovieFact {
