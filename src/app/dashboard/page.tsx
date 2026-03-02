@@ -26,17 +26,21 @@ export default async function DashboardPage() {
 
         {/* User Info */}
         <div className="flex items-center gap-4">
-          {user.image && (
+            {user.image ? (
             <Image
-              src={user.image}
-              alt="Profile photo"
-              width={56}
-              height={56}
-              className="rounded-full border border-slate-700"
+                src={user.image}
+                alt="Profile photo"
+                width={56}
+                height={56}
+                className="rounded-full border border-slate-700"
             />
-          )}
+            ) : (
+            <div className="w-14 h-14 rounded-full border border-slate-700 bg-slate-800 flex items-center justify-center text-xl font-bold text-slate-400">
+                {(user.name ?? user.email ?? "?")[0].toUpperCase()}
+            </div>
+            )}
           <div>
-            <h2 className="text-xl font-bold">{user.name}</h2>
+          <h2 className="text-xl font-bold">{user.name ?? user.email}</h2>
             <p className="text-slate-400 text-sm">{user.email}</p>
           </div>
         </div>
