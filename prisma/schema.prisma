@@ -8,17 +8,17 @@ datasource db {
 }
 
 model User {
-  id            String      @id @default(cuid())
-  email         String      @unique
-  name          String?
-  image         String?
-  favoriteMovie String?
-  createdAt     DateTime    @default(now())
-  movieFacts    MovieFact[]
-
-  // NextAuth required fields
-  accounts      Account[]
-  sessions      Session[]
+  id                    String      @id @default(cuid())
+  email                 String      @unique
+  name                  String?
+  image                 String?
+  emailVerified         DateTime?
+  favoriteMovie         String?
+  createdAt             DateTime    @default(now())
+  isGeneratingFact      Boolean     @default(false)
+  movieFacts            MovieFact[]
+  accounts              Account[]
+  sessions              Session[]
 }
 
 model MovieFact {
@@ -28,6 +28,8 @@ model MovieFact {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+
+  @@index([userId, createdAt])
 }
 
 // NextAuth adapter models
