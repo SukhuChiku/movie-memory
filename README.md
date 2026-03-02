@@ -9,7 +9,7 @@
  An OpenAI API key
 
 ### 1. Clone the repository
-git clone https://github.com/SukhuChiku/movie-memory
+git clone https://github.com/SukhuChiku/movie-memory. 
 cd movie-memory
 
 
@@ -17,29 +17,20 @@ cd movie-memory
 npm install
 
 
-### 3. Set up environment variables
-add .env file as below -
-
-DATABASE_URL="postgresql://postgres:SOME_PASSWORD@localhost:5432/movie_memory"
-AUTH_SECRET="run this command - 'openssl rand -base64 32' and paste the output here"
-AUTH_GOOGLE_ID="YOUR-google-client-id"
-AUTH_GOOGLE_SECRET="YOUR-google-client-secret"
-OPENAI_API_KEY="YOUR-openai-api-key"
-NEXTAUTH_URL="http://localhost:3000"
-
-
-
-### 4. Run database migrations
+### 3. Run database migrations
 npx prisma migrate dev
 
+### 4. Set up environment variables
 
-### 5. Start the development server
-npm run dev
+### Google OAuth Setup
 
+1. Go to [console.cloud.google.com](https://console.cloud.google.com)
+2. Create a new project
+3. Navigate to **APIs & Services → OAuth consent screen** and configure it
+4. Navigate to **APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID**
+5. Set **Authorized redirect URI** to: `http://localhost:3000/api/auth/callback/google`
+6. Copy the Client ID and Client Secret into your .env file. 
 
-Visit http://localhost:3000
-
----
 
 ## Environment Variables
 
@@ -50,16 +41,29 @@ Visit http://localhost:3000
 | `AUTH_GOOGLE_ID` | Google OAuth Client ID from Google Cloud Console |
 | `AUTH_GOOGLE_SECRET` | Google OAuth Client Secret from Google Cloud Console |
 | `NEXTAUTH_URL` | Base URL of the app. Use `http://localhost:3000` for local development |
-| `OPENAI_API_KEY` | OpenAI API key from platform.openai.com |
+| `OPENAI_API_KEY` | OpenAI API key from platform.openai.com |. 
 
-### Google OAuth Setup
+## Add .env file as below -
 
-1. Go to [console.cloud.google.com](https://console.cloud.google.com)
-2. Create a new project
-3. Navigate to **APIs & Services → OAuth consent screen** and configure it
-4. Navigate to **APIs & Services → Credentials → Create Credentials → OAuth 2.0 Client ID**
-5. Set **Authorized redirect URI** to: `http://localhost:3000/api/auth/callback/google`
-6. Copy the Client ID and Client Secret into your .env file
+DATABASE_URL="postgresql://postgres:SOME_PASSWORD@localhost:5432/movie_memory". 
+AUTH_SECRET="run this command - 'openssl rand -base64 32' and paste the output here". 
+AUTH_GOOGLE_ID="YOUR-google-client-id". 
+AUTH_GOOGLE_SECRET="YOUR-google-client-secret". 
+OPENAI_API_KEY="YOUR-openai-api-key". 
+NEXTAUTH_URL="http://localhost:3000". 
+
+
+
+
+
+### 5. Start the development server
+npm run dev
+
+
+Visit http://localhost:3000
+
+---
+
 
 ---
 
@@ -283,9 +287,14 @@ npm test
 ---
 
 ## AI Usage Note
-I designed the basic architecture and overall system structure for the project (outlined at the beginning of the file). In addition to the core requirements, I implemented several additions (beyond requirements mentioned at the end of this file) to improve the project's accuracy and robustness.
-The codebase was developed with AI assistance (Claude), which was primarily used for scaffolding, code generation, debugging, error resolution, and documentation. All AI-generated code was thoroughly reviewed, fully understood, tested, and verified to be functioning correctly before being committed.
-
+- I designed the basic architecture and overall system structure for this project (outlined at the beginning of this file).
+- In addition to the core requirements, I implemented several additions (beyond requirements, listed at the end of this file) to improve the project's accuracy and robustness.
+- The codebase was developed with AI assistance (Claude), which was used for:
+  1. Scaffolding  
+  2. Code generation  
+  3. Debugging and errors   
+  4. Documentation support  
+- All AI-generated code was thoroughly reviewed, fully understood, tested, and verified to be functioning correctly before being committed.
 
 
 ---
