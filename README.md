@@ -9,7 +9,7 @@
  An OpenAI API key
 
 ### 1. Clone the repository
-git clone https://github.com/SukhuChiku/movie-memory. 
+git clone https://github.com/SukhuChiku/movie-memory <br>
 cd movie-memory
 
 
@@ -45,12 +45,12 @@ npx prisma migrate dev
 
 ## Add .env file as below -
 
-DATABASE_URL="postgresql://postgres:SOME_PASSWORD@localhost:5432/movie_memory". 
-AUTH_SECRET="run this command - 'openssl rand -base64 32' and paste the output here". 
-AUTH_GOOGLE_ID="YOUR-google-client-id". 
-AUTH_GOOGLE_SECRET="YOUR-google-client-secret". 
-OPENAI_API_KEY="YOUR-openai-api-key". 
-NEXTAUTH_URL="http://localhost:3000". 
+DATABASE_URL="postgresql://postgres:SOME_PASSWORD@localhost:5432/movie_memory" <br>
+AUTH_SECRET="run this command - 'openssl rand -base64 32' and paste the output here" <br>
+AUTH_GOOGLE_ID="YOUR-google-client-id" <br>
+AUTH_GOOGLE_SECRET="YOUR-google-client-secret" <br>
+OPENAI_API_KEY="YOUR-openai-api-key" <br>
+NEXTAUTH_URL="http://localhost:3000" <br>
 
 
 
